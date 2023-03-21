@@ -5,18 +5,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import BottomNavigator from "./src/views/navigation/BottomNavigator";
 
 import HomeScreen from "./src/views/screens/HomeScreen.js";
+import { NativeBaseProvider } from "native-base";
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Home" component={BottomNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home" component={BottomNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 };
 

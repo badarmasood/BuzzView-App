@@ -12,8 +12,13 @@ import {
   Touchable,
   ScrollView,
 } from "react-native";
+import FacebookCard from "../component/FacebookCard";
 function Facebook() {
-  return <Text>Facebook</Text>;
+  return (
+    <>
+      <FacebookCard />
+    </>
+  );
 }
 
 export default Facebook;

@@ -12,8 +12,9 @@ import {
   Touchable,
   ScrollView,
 } from "react-native";
+import TikTokCard from "../component/TiktokCard";
 function Tiktok() {
-  return <Text>Tiktok</Text>;
+  return <TikTokCard />;
 }
 
 export default Tiktok;

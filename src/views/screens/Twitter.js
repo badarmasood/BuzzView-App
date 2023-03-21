@@ -12,8 +12,9 @@ import {
   Touchable,
   ScrollView,
 } from "react-native";
+import TwitterCard from "../component/TwitterCard";
 function Twitter() {
-  return <Text>Twitter</Text>;
+  return <TwitterCard />;
 }
 
 export default Twitter;

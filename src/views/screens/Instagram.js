@@ -1,19 +1,12 @@
-import React from 'react'
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  TouchableHighlight,
-  Touchable,
-  ScrollView,
-} from "react-native";
+import React from "react";
+
+import InstagramCard from "../component/InstagramCard";
 function Instagram() {
-  return <Text>Instagram</Text>
+  return (
+    <>
+      <InstagramCard />
+    </>
+  );
 }
 
-export default Instagram
+export default Instagram;
