@@ -11,7 +11,10 @@ import {
 
 import { Video } from "expo-av";
 
-const { width, height } = Dimensions.get("window");
+// const { width, height } = Dimensions.get("window");
+// console.log("Dimensions",Dimensions.get("window"))
+const { width } = Dimensions.get("window");
+const height = 690;
 
 const TikTokItem = ({ item }) => {
   const video = React.useRef(null);
@@ -32,13 +35,13 @@ const TikTokItem = ({ item }) => {
         source={{
           uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
         }}
-        // useNativeControls
+        useNativeControls
         resizeMode="cover"
         isLooping={true}
-        isMuted={true}
+        isMuted={false}
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
-      <View style={styles.buttons}>
+      {/* <View style={styles.buttons}>
         <Button
           title={status.isPlaying ? "Pause" : "Play"}
           onPress={() =>
@@ -47,7 +50,7 @@ const TikTokItem = ({ item }) => {
               : video.current.playAsync()
           }
         />
-      </View>
+      </View> */}
       <View style={styles.userInfoContainer}>
         <Image source={{ uri: item.profilePic }} style={styles.profilePic} />
         <View style={styles.userInfo}>
