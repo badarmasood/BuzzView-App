@@ -46,6 +46,7 @@ function YoutubeVideos() {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={DATA}
+        horizontal={true}
         renderItem={({ item }) => (
           <YoutubeCard
             title={item.title}

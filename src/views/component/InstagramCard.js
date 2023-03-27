@@ -61,6 +61,7 @@ const HomeScreen = () => {
   return (
     <FlatList
       data={feedData}
+      horizontal={true}
       keyExtractor={(item) => item.id}
       renderItem={renderFeedItem}
       style={styles.feed}
