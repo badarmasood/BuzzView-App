@@ -1,112 +1,252 @@
 import React from "react";
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  Button,
+} from "react-native";
+import { Video, AVPlaybackStatus } from "expo-av";
+const { width } = Dimensions.get("window");
+const height = 690;
 
-const feedData = [
-  {
-    id: "1",
-    username: "johndoe",
-    userImage: require("../../assets/card1.jpg"),
-    postImage: require("../../assets/card1.jpg"),
-    likes: "100",
-    caption: "Beautiful day at the beach 🏖️☀️",
-    comments: "5",
-  },
-  {
-    id: "2",
-    username: "janedoe",
-    userImage: require("../../assets/card2.jpg"),
-    postImage: require("../../assets/card2.jpg"),
-    likes: "200",
-    caption: "Exploring the city 🏙️🚶‍♀️",
-    comments: "10",
-  },
-  {
-    id: "3",
-    username: "janedoe",
-    userImage: require("../../assets/card2.jpg"),
-    postImage: require("../../assets/card2.jpg"),
-    likes: "200",
-    caption: "Exploring the city 🏙️🚶‍♀️",
-    comments: "10",
-  },
-  {
-    id: "4",
-    username: "janedoe",
-    userImage: require("../../assets/card2.jpg"),
-    postImage: require("../../assets/card2.jpg"),
-    likes: "200",
-    caption: "Exploring the city 🏙️🚶‍♀️",
-    comments: "10",
-  },
-];
-
-const HomeScreen = () => {
-  const renderFeedItem = ({ item }) => {
-    return (
-      <View style={styles.feedItem}>
-        <View style={styles.feedHeader}>
-          <Image source={item.userImage} style={styles.userImage} />
-          <Text style={styles.username}>{item.username}</Text>
-        </View>
-        <Image source={item.postImage} style={styles.postImage} />
-        <View style={styles.feedFooter}>
-          <Text style={styles.likes}>{item.likes} likes</Text>
-          <Text style={styles.caption}>{item.caption}</Text>
-          <Text style={styles.comments}>{item.comments} comments</Text>
-        </View>
+const ReelsItem = ({ item }) => {
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  return (
+    <View style={styles.reelsItemContainer}>
+      <Video
+        ref={video}
+        style={styles.video}
+        source={require("../../assets/videos/nature1.mp4")}
+        resizeMode="cover"
+        isMuted
+        autoplay
+        useNativeControls
+        isLooping
+        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+      />
+      <View style={styles.descriptionContainer}>
+        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.channel}>@Tiktok</Text>
       </View>
-    );
-  };
+    </View>
+  );
+};
+
+const ReelsScreen = () => {
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  const reels = [
+    {
+      id: "1",
+      thumbnail: "https://picsum.photos/id/1011/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "2",
+      thumbnail: "https://picsum.photos/id/1012/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "3",
+      thumbnail: "https://picsum.photos/id/1013/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "4",
+      thumbnail: "https://picsum.photos/id/1013/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "5",
+      thumbnail: "https://picsum.photos/id/1013/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "6",
+      thumbnail: "https://picsum.photos/id/1013/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+  ];
 
   return (
-    <FlatList
-      data={feedData}
-      horizontal={true}
-      keyExtractor={(item) => item.id}
-      renderItem={renderFeedItem}
-      style={styles.feed}
-    />
+    <View style={styles.container}>
+      <Text style={styles.text}>Instagram Reels</Text>
+      <FlatList
+        data={reels}
+        horizontal={true}
+        renderItem={({ item }) => <ReelsItem item={item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  feed: {
+  container: {
     flex: 1,
-    backgroundColor: "#fff",
+    paddingVertical: 25,
+    backgroundColor: "#dddddd",
   },
-  feedItem: {
-    marginBottom: 20,
-  },
-  feedHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
-  userImage: {
-    width: 40,
-    height: 40,
+  reelsItemContainer: {
+    marginVertical: 15,
+    marginHorizontal: 10,
+    width: 310,
+    backgroundColor: "#eee",
     borderRadius: 20,
-    marginRight: 10,
+    elevation: 8,
+    shadowColor: "black",
   },
-  username: {
+  text: {
+    marginLeft: 10,
+    fontSize: 22,
     fontWeight: "bold",
-    fontSize: 16,
   },
-  postImage: {
+  video: {
     width: "100%",
     height: 300,
+    borderRadius: 20,
   },
-  feedFooter: {
+  thumbnail: {
+    width: "auto",
+    height: "80%",
+    borderRadius: 20,
+  },
+  descriptionContainer: {
     padding: 10,
+    height: "20%",
   },
-  likes: {
-    fontWeight: "bold",
-    marginBottom: 5,
+  description: {
+    fontSize: 16,
+    fontWeight: "600",
   },
-  caption: {
-    marginBottom: 5,
+  channel: {
+    lineHeight: 25,
+    fontSize: 16,
+    fontWeight: "500",
   },
-  comments: {},
 });
 
-export default HomeScreen;
+export default ReelsScreen;
+
+// import React from "react";
+// import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+
+// const feedData = [
+//   {
+//     id: "1",
+//     username: "johndoe",
+//     userImage: require("../../assets/card1.jpg"),
+//     postImage: require("../../assets/card1.jpg"),
+//     likes: "100",
+//     caption: "Beautiful day at the beach 🏖️☀️",
+//     comments: "5",
+//   },
+//   {
+//     id: "2",
+//     username: "janedoe",
+//     userImage: require("../../assets/card2.jpg"),
+//     postImage: require("../../assets/card2.jpg"),
+//     likes: "200",
+//     caption: "Exploring the city 🏙️🚶‍♀️",
+//     comments: "10",
+//   },
+//   {
+//     id: "3",
+//     username: "janedoe",
+//     userImage: require("../../assets/card2.jpg"),
+//     postImage: require("../../assets/card2.jpg"),
+//     likes: "200",
+//     caption: "Exploring the city 🏙️🚶‍♀️",
+//     comments: "10",
+//   },
+//   {
+//     id: "4",
+//     username: "janedoe",
+//     userImage: require("../../assets/card2.jpg"),
+//     postImage: require("../../assets/card2.jpg"),
+//     likes: "200",
+//     caption: "Exploring the city 🏙️🚶‍♀️",
+//     comments: "10",
+//   },
+// ];
+
+// const HomeScreen = () => {
+//   const renderFeedItem = ({ item }) => {
+//     return (
+//       <View style={styles.feedItem}>
+//         <View style={styles.feedHeader}>
+//           <Image source={item.userImage} style={styles.userImage} />
+//           <Text style={styles.username}>{item.username}</Text>
+//         </View>
+//         <Image source={item.postImage} style={styles.postImage} />
+//         <View style={styles.feedFooter}>
+//           <Text style={styles.likes}>{item.likes} likes</Text>
+//           <Text style={styles.caption}>{item.caption}</Text>
+//           <Text style={styles.comments}>{item.comments} comments</Text>
+//         </View>
+//       </View>
+//     );
+//   };
+
+//   return (
+//     <FlatList
+//       data={feedData}
+//       horizontal={true}
+//       keyExtractor={(item) => item.id}
+//       renderItem={renderFeedItem}
+//       style={styles.feed}
+//     />
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   feed: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   feedItem: {
+//     marginBottom: 20,
+//   },
+//   feedHeader: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     padding: 10,
+//   },
+//   userImage: {
+//     width: 40,
+//     height: 40,
+//     borderRadius: 20,
+//     marginRight: 10,
+//   },
+//   username: {
+//     fontWeight: "bold",
+//     fontSize: 16,
+//   },
+//   postImage: {
+//     width: "100%",
+//     height: 300,
+//   },
+//   feedFooter: {
+//     padding: 10,
+//   },
+//   likes: {
+//     fontWeight: "bold",
+//     marginBottom: 5,
+//   },
+//   caption: {
+//     marginBottom: 5,
+//   },
+//   comments: {},
+// });
+
+// export default HomeScreen;

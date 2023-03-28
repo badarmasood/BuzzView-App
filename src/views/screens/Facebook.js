@@ -13,12 +13,15 @@ import {
   ScrollView,
 } from "react-native";
 import FacebookCard from "../component/FacebookCard";
+import InstagramCard from "../component/InstagramCard";
+
 function Facebook() {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.text}>Facebook Reels</Text>
-        <FacebookCard />
+        <ScrollView>
+          <FacebookCard />
+        </ScrollView>
       </View>
     </>
   );
@@ -26,14 +29,6 @@ function Facebook() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
-    height: 150,
-  },
-  text: {
-    padding: 10,
-
-    fontSize: 22,
-    fontWeight: "bold",
   },
 });
 

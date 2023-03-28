@@ -14,7 +14,6 @@ import YoutubeVideos from "../screens/YoutubeVideos";
 import Twitter from "../screens/Twitter";
 import Facebook from "../screens/Facebook";
 
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
@@ -49,16 +48,26 @@ function BottomNavigator() {
 
       <Tab.Screen
         name="Tiktok"
-        component={Tiktok}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="facebook" color={color} size={28} />
-          ),
+        component={HomeScreen}
+        options={({ navigation }) => {
+          return {
+            tabBarIcon: ({ color }) => (
+              <Icon
+                name="facebook"
+                color={color}
+                size={28}
+                onPress={() => {
+                  // Navigate using the `navigation` prop that you received
+                  navigation.navigate("YT Shorts");
+                }}
+              />
+            ),
+          };
         }}
       />
       <Tab.Screen
         name="Instagram"
-        component={Instagram}
+        component={HomeScreen}
         options={({ navigation }) => {
           return {
             tabBarIcon: ({ color }) => (
@@ -67,10 +76,9 @@ function BottomNavigator() {
           };
         }}
       />
-
       <Tab.Screen
         name="YT Videos"
-        component={YoutubeVideos}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="youtube-play" color={color} size={28} />
@@ -80,7 +88,7 @@ function BottomNavigator() {
 
       <Tab.Screen
         name="Twitter"
-        component={Twitter}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="twitter" color={color} size={28} />
@@ -89,11 +97,13 @@ function BottomNavigator() {
       />
       <Tab.Screen
         name="Fb Reels"
-        component={Facebook}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Icon name="facebook" color={color} size={28} />
-          ),
+        component={HomeScreen}
+        options={({ navigation }) => {
+          return {
+            tabBarIcon: ({ color }) => (
+              <Icon name="facebook" color={color} size={28} />
+            ),
+          };
         }}
       />
     </Tab.Navigator>

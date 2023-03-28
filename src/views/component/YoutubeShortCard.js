@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 const { width } = Dimensions.get("window");
@@ -15,19 +16,25 @@ const height = 690;
 const ReelsItem = ({ item }) => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayVideo = () => {
+    setIsPlaying(true);
+  };
+
   return (
     <View style={styles.reelsItemContainer}>
       <Video
         ref={video}
         style={styles.video}
-        source={require("../../assets/videos/nature.mp4")}
+        source={require("../../assets/videos/nature2.mp4")}
         resizeMode="cover"
         isMuted
         autoplay
         useNativeControls
         isLooping
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
+
       <View style={styles.descriptionContainer}>
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.channel}>@Tiktok</Text>
@@ -80,7 +87,7 @@ const ReelsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container} id="facebook">
-      <Text style={styles.text}>Twitter </Text>
+      <Text style={styles.text}>Youtube Shorts</Text>
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={reels}
