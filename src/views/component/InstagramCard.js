@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,26 +8,33 @@ import {
   Dimensions,
   Button,
 } from "react-native";
-import { Video, AVPlaybackStatus } from "expo-av";
-const { width } = Dimensions.get("window");
-const height = 690;
+import { Video } from "expo-av";
+import { TouchableOpacity } from "react-native";
 
 const ReelsItem = ({ item }) => {
   const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <View style={styles.reelsItemContainer}>
-      <Video
-        ref={video}
-        style={styles.video}
-        source={require("../../assets/videos/nature1.mp4")}
-        resizeMode="cover"
-        isMuted
-        autoplay
-        useNativeControls
-        isLooping
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          if (isPlaying) {
+            video.current.pauseAsync();
+          } else {
+            video.current.playAsync();
+          }
+          setIsPlaying(!isPlaying);
+        }}
+      >
+        <Video
+          ref={video}
+          style={styles.video}
+          source={require("../../assets/videos/nature1.mp4")}
+          resizeMode="cover"
+          isMuted
+          isLooping
+        />
+      </TouchableOpacity>
       <View style={styles.descriptionContainer}>
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.channel}>@Tiktok</Text>
@@ -54,24 +61,6 @@ const ReelsScreen = () => {
     },
     {
       id: "3",
-      thumbnail: "https://picsum.photos/id/1013/200/300",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    },
-    {
-      id: "4",
-      thumbnail: "https://picsum.photos/id/1013/200/300",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    },
-    {
-      id: "5",
-      thumbnail: "https://picsum.photos/id/1013/200/300",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-    },
-    {
-      id: "6",
       thumbnail: "https://picsum.photos/id/1013/200/300",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
