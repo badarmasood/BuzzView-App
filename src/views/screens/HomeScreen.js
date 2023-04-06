@@ -10,7 +10,7 @@ import TwitterCard from "../component/TwitterCard";
 import YoutubeShortCard from "../component/YoutubeShortCard";
 import TabBar from "../component/TabBar";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import CardSilder from "react-native-cards-slider";
 function Homescreen() {
   const [scrollToIndex, setScrollToIndex] = useState(0);
   const [dataSourceCords, setDataSourceCords] = useState([]);
@@ -27,7 +27,7 @@ function Homescreen() {
       alert("Error in scrolling");
     }
   };
-  console.log("scrollToIndex", scrollToIndex);
+
   return (
     <>
       <View style={styles.container}>

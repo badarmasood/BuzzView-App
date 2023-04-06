@@ -1,54 +1,38 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-import { TouchableOpacity } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  Button,
+} from "react-native";
 import { Video } from "expo-av";
+import { Pressable } from "react-native";
 
-const ReelsItem = ({ item }) => {
-  const video = React.useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  return (
-    <View style={styles.reelsItemContainer}>
-      <TouchableOpacity
-        onPress={() => {
-          if (isPlaying) {
-            video.current.pauseAsync();
-          } else {
-            video.current.playAsync();
-          }
-          setIsPlaying(!isPlaying);
-        }}
-      >
-        <Video
-          ref={video}
-          style={styles.video}
-          source={require("../../assets/videos/nature2.mp4")}
-          resizeMode="cover"
-          isMuted
-          isLooping
-          shouldPlay={isPlaying}
-        />
-      </TouchableOpacity>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.channel}>@Tiktok</Text>
-      </View>
-    </View>
-  );
-};
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+const { width } = Dimensions.get("window");
 
 const ReelsScreen = ({ navigation }) => {
   const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const [play, setPlay] = React.useState(false);
+
   const reels = [
     {
-      id: "1",
+      id: "0",
       thumbnail: "https://picsum.photos/id/1011/200/300",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     },
     {
-      id: "2",
+      id: "1",
       thumbnail: "https://picsum.photos/id/1012/200/300",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+    },
+    {
+      id: "2",
+      thumbnail: "https://picsum.photos/id/1013/200/300",
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     },
@@ -63,12 +47,44 @@ const ReelsScreen = ({ navigation }) => {
   return (
     <View style={styles.container} id="facebook">
       <Text style={styles.text}>Youtube Videos</Text>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
+
+      <SwiperFlatList
+        autoplayDelay={2}
+        autoplayLoop
+        index={0}
         data={reels}
-        horizontal={true}
-        renderItem={({ item }) => <ReelsItem item={item} />}
-        keyExtractor={(item) => item.id}
+        onChangeIndex={(index) => {}}
+        renderItem={({ item }) => (
+          <>
+            <View
+              style={{
+                justifyContent: "center",
+              }}
+            >
+              <View style={styles.reelsItemContainer}>
+                <Pressable
+                  onPress={() => {
+                    setPlay(!play);
+                  }}
+                >
+                  <Video
+                    ref={video}
+                    style={styles.video}
+                    source={require("../../assets/videos/nature1.mp4")}
+                    resizeMode="cover"
+                    isMuted
+                    isLooping
+                    shouldPlay={play}
+                  />
+                </Pressable>
+                <View style={styles.descriptionContainer}>
+                  <Text style={styles.description}>{item.description}</Text>
+                  <Text style={styles.channel}>@Tiktok</Text>
+                </View>
+              </View>
+            </View>
+          </>
+        )}
       />
     </View>
   );
@@ -82,8 +98,8 @@ const styles = StyleSheet.create({
   },
   reelsItemContainer: {
     marginVertical: 15,
-    marginHorizontal: 10,
-    width: 310,
+    marginHorizontal: 15,
+    width: 360,
     backgroundColor: "#eee",
     borderRadius: 20,
     elevation: 8,
@@ -116,7 +132,9 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     fontSize: 16,
     fontWeight: "500",
+    paddingBottom: 15,
   },
+  child: { width, justifyContent: "center" },
 });
 
 export default ReelsScreen;
